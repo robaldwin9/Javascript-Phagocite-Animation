@@ -6,7 +6,6 @@ var context = canvas.getContext("2d");
 var cell = null;
 var bacteria = [];
 
-
 var phagocyteAnimation = {
 //general bacteria object
 bacteria: function (source)
@@ -77,11 +76,9 @@ for(var i = 0; i < 25; i ++)
 	canvas.width =  width - 3 ;
 	canvas.height = height - 3 ;
 
-
 	//cell starts in center
 	cell.x = canvas.width/2;
 	cell.y = canvas.height/2;
-
 
 	document.body.appendChild(canvas);
 
@@ -92,33 +89,27 @@ for(var i = 0; i < 25; i ++)
 		bacteria[i].startx = bacteria[i].x;
 		bacteria[i].starty = bacteria[i].y;
 	}
+
 phagocyteAnimation.animation();
 },
 cellBorder: function ()
 {
-
 	var num = Math.floor(Math.random() * (5) + 1) ;
 	cell.img.src = "../img/phagocyte" + num + ".png";
-
-
 },
 
 draw: function ()
 {
-
 	context.clearRect(0,0, canvas.width, canvas.height);
 	context.drawImage(cell.img, cell.x,cell.y);
 
 	for(var i = 0; i < bacteria.length; i++)
 		context.drawImage(bacteria[i].img, bacteria[i].x , bacteria[i].y);
-
-
 },
 
 //find closest bacteria to the cell
 closestBacteria: function ()
 {
-
 	var bacTemp = bacteria[0];
 	for(var i = 1; i < bacteria.length; i ++)
 	{
@@ -126,16 +117,12 @@ closestBacteria: function ()
 		if(!bacteria[i].cap)
 		{
 			var d1 = Math.sqrt(Math.pow((cell.x - bacTemp.x) + (cell.y - bacTemp.y)));
-			var d2 = Math.sqrt(Math.pow((cell.x - bacteria[i].x) + (cell.y - bacteria[i].y)));
+			var d2 = Math.sqrt(Math.pow((cell.x - bacteria[i].x)) + Math.pow((cell.y - bacteria[i].y)));
 
 			if( d2 < d1)
 				bacTemp = bacteria[i];
-
-
 		}
 	}
-	if(bacteria[0] == null)
-		phagocyteAnimation.reset();
 	return bacTemp;
 },
 
@@ -151,17 +138,15 @@ reset: function ()
 		bacteria[i].startx = bacteria[i].x;
 		bacteria[i].starty = bacteria[i].y;
 	}
+requestAnimationFrame(phagocyteAnimation.animation())
 },
 
 //simulates digestion after screen cleared of bacteria
 removeBacteria: function ()
 {
-	if(bacteria[0] == null)
-		reset();
-
 	var allCaptured = true;
 
-	for(var i = 0; i < bacteria.length; i ++)
+	for(var i = 0; i < bacteria.length; i++)
 	{
 		if(!bacteria[i].cap)
 			allCaptured = false;
@@ -203,6 +188,7 @@ update: function ()
 
 	//move in direction of closest bacteria
 	var closestBac = phagocyteAnimation.closestBacteria();
+
 	if(!closestBac.cap)
 	{
 		var xDifference = closestBac.x - cell.x;
@@ -279,10 +265,17 @@ update: function ()
 
 animation: function ()
 {
+	try
+	{
 
-	phagocyteAnimation.update();
-	phagocyteAnimation.draw();
-	phagocyteAnimation.removeBacteria();
-	requestAnimationFrame(phagocyteAnimation.animation);
+		phagocyteAnimation.draw();
+		phagocyteAnimation.update();
+		phagocyteAnimation.removeBacteria();
+		animationId = requestAnimationFrame(phagocyteAnimation.animation);
+	}
+	catch (e)
+	{
+		phagocyteAnimation.reset();
+	}
 }
 };
