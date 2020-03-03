@@ -1,4 +1,5 @@
 # phagocite Animation
+js animation
 ======
 **Phagocite Animation** Javascript animation of a white blood cell eating bacteria
 
