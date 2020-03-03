@@ -1,6 +1,16 @@
-# [Javascript-Phagocite-Animation](http://www.rjservers.com/phagocytosis/html/Phagocytosis.html)
-A Javascript animation of a Phagocyte eating bacteria. It contains similar logic 
-that a 2d game would contain.
+# phagocite Animation
+======
+**Phagocite Animation** Javascript animation of a white blood cell eating bacteria
 
-# Licence
-Feel free to modify and resuse code for personal use only.
+### Translations
+* None Available
+
+## License 
+* MIT 
+
+## Version 
+* Version 1.0
+
+## Usage
+Open Phagocytosis.html to view animation
+
